@@ -128,10 +128,34 @@ public class Customer {
 						
 
 			con.close();
-			String newItems = readCustomers();
-			output = "{\"status\":\"success\", \"data\": \"" + newItems + "\"}";
+			String newCustomers = readCustomers();
+			output = "{\"status\":\"success\", \"data\": \"" + newCustomers + "\"}";
 		} catch (Exception e) {
 			output = "{\"status\":\"error\", \"data\": \"Error while updating the item.\"}";
+			System.err.println(e.getMessage());
+		}
+		return output;
+	}
+	
+	public String deleteCustomer(String customerId) {
+		String output = "";
+		try {
+			Connection con = connect();
+			if (con == null) {
+				return "Error while connecting to the database for deleting.";
+			}
+			// create a prepared statement
+			String query = "delete from customer where customerId=?";
+			PreparedStatement preparedStmt = con.prepareStatement(query);
+			// binding values
+			preparedStmt.setInt(1, Integer.parseInt(customerId));
+			// execute the statement
+			preparedStmt.execute();
+			con.close();
+			String newCustomers = readCustomers();
+			output = "{\"status\":\"success\", \"data\": \"" + newCustomers + "\"}";
+		} catch (Exception e) {
+			output = "{\"status\":\"error\", \"data\": \"Error while deleting the item.\"}";
 			System.err.println(e.getMessage());
 		}
 		return output;
