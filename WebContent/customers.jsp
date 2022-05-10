@@ -14,27 +14,31 @@
 		<div class="row">
 			<div class="col-6">
 				<h1>Customer Management V10.1</h1>
-				<!-- <form id="formItem" name="formItem">
-					Item code: <input id="itemCode" name="itemCode" type="text"
-						class="form-control form-control-sm"> <br> Item name:
-					<input id="itemName" name="itemName" type="text"
-						class="form-control form-control-sm"> <br> Item
-					price: <input id="itemPrice" name="itemPrice" type="text"
-						class="form-control form-control-sm"> <br> Item
-					description: <input id="itemDesc" name="itemDesc" type="text"
-						class="form-control form-control-sm"> <br> <input
+				 <form id="formCus" name="formCus">
+					FirstName: <input id="firstName" name="firstName" type="text"
+						class="form-control form-control-sm"> <br> LastName:
+					<input id="lastName" name="lastName" type="text"
+						class="form-control form-control-sm"> <br> nic
+					price: <input id="nic" name="nic" type="text"
+						class="form-control form-control-sm"> <br> Phone
+					Number: <input id="phone" name="phone" type="text"
+						class="form-control form-control-sm"> <br>email: 
+						<input id="email" name="email" type="text"
+						class="form-control form-control-sm"> <br>
+						
+						 <input
 						id="btnSave" name="btnSave" type="button" value="Save"
 						class="btn btn-primary"> <input type="hidden"
 						id="hidItemIDSave" name="hidItemIDSave" value="">
-				</form> -->
+				</form> 
 				<div id="alertSuccess" class="alert alert-success"></div>
 				<div id="alertError" class="alert alert-danger"></div>
 				<br>
 				<div id="divItemsGrid">
-					<!-- <%
+					<%
 					Customer customerObj = new Customer();
-					out.print(customerObj.readItems());
-					%>-->
+					out.print(customerObj.readCustomers());
+					%>
 				</div>
 			</div>
 		</div>
