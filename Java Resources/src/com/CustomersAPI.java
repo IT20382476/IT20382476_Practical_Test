@@ -13,6 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/CustomersAPI")
 public class CustomersAPI extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
+	Customer customerObj = new Customer();
+
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -35,6 +38,10 @@ public class CustomersAPI extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		
+		String output = customerObj.insertCustomer(Integer.parseInt(request.getParameter("customerId")),request.getParameter("firstName"), request.getParameter("lastName"),
+				request.getParameter("nic"), Integer.parseInt(request.getParameter("phone")),request.getParameter("email"));
+		response.getWriter().write(output);
 		doGet(request, response);
 	}
 
