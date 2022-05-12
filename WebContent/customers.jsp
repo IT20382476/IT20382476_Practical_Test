@@ -29,12 +29,12 @@
 						 <input
 						id="btnSave" name="btnSave" type="button" value="Save"
 						class="btn btn-primary"> <input type="hidden"
-						id="hidItemIDSave" name="hidItemIDSave" value="">
+						id="hidcustomerIdSave" name="hidcustomerIdSave" value="">
 				</form> 
 				<div id="alertSuccess" class="alert alert-success"></div>
 				<div id="alertError" class="alert alert-danger"></div>
 				<br>
-				<div id="divItemsGrid">
+				<div id="divCustomersGrid">
 					<%
 					Customer customerObj = new Customer();
 					out.print(customerObj.readCustomers());
