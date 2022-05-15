@@ -14,13 +14,13 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-6">
-				<h1>Customer Management V10.1</h1>
+				<h1>Customer Management EG</h1>
 				 <form id="formCus" name="formCus">
 					FirstName: <input id="firstName" name="firstName" type="text"
 						class="form-control form-control-sm"> <br> LastName:
 					<input id="lastName" name="lastName" type="text"
 						class="form-control form-control-sm"> <br> nic
-					price: <input id="nic" name="nic" type="text"
+					: <input id="nic" name="nic" type="text"
 						class="form-control form-control-sm"> <br> Phone
 					Number: <input id="phone" name="phone" type="text"
 						class="form-control form-control-sm"> <br>email: 
