@@ -1,3 +1,4 @@
+<%@page import="com.Customer"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -7,7 +8,7 @@
 <title>Items Management</title>
 <link rel="stylesheet" href="Views/bootstrap.min.css">
 <script src="Components/jquery-3.4.0.min.js"></script>
-<script src="Components/items.js"></script>
+<script src="Components/customers.js"></script>
 </head>
 <body>
 	<div class="container">
@@ -29,7 +30,7 @@
 						 <input
 						id="btnSave" name="btnSave" type="button" value="Save"
 						class="btn btn-primary"> <input type="hidden"
-						id="hidcustomerIdSave" name="hidcustomerIdSave" value="">
+						id="hidCustomerIDSave" name="hidCustomerIDSave" value="">
 				</form> 
 				<div id="alertSuccess" class="alert alert-success"></div>
 				<div id="alertError" class="alert alert-danger"></div>

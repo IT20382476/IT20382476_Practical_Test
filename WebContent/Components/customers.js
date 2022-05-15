@@ -1,6 +1,3 @@
-/**
- * 
- */
  
 $(document).ready(function () {
   $("#alertSuccess").hide();
@@ -21,7 +18,7 @@ $(document).on("click", "#btnSave", function (event) {
   }
  
   // If valid------------------------
-  var type = $("#hidcustomerIdSave").val() == "" ? "POST" : "PUT";
+  var type = $("#hidCustomerIDSave").val() == "" ? "POST" : "PUT";
   $.ajax({
     url: "CustomersAPI",
     type: type,
@@ -50,6 +47,80 @@ function onCustomerSaveComplete(response, status) {
     $("#alertError").text("Unknown error while saving..");
     $("#alertError").show();
   }
-  $("#hidcustomerIdSave").val("");
+  $("#hidCustomerIDSave").val("");
   $("#formCus")[0].reset();
 }
+
+//UPDATE
+$(document).on("click", ".btnUpdate", function (event) {
+  $("#hidCustomerIDSave").val($(this).data("customerid"));
+  $("#firstName").val($(this).closest("tr").find("td:eq(0)").text());
+  $("#lastName").val($(this).closest("tr").find("td:eq(1)").text());
+  $("#nic").val($(this).closest("tr").find("td:eq(2)").text());
+  $("#phone").val($(this).closest("tr").find("td:eq(3)").text());
+  $("#email").val($(this).closest("tr").find("td:eq(3)").text());
+
+
+});
+$(document).on("click", ".btnRemove", function (event) {
+  $.ajax({
+    url: "CustomersAPI",
+    type: "DELETE",
+    data: "customerID=" + $(this).data("customerid"),
+    dataType: "text",
+    complete: function (response, status) {
+      onCustomerDeleteComplete(response.responseText, status);
+    },
+  });
+});
+
+function onCustomerDeleteComplete(response, status) {
+  if (status == "success") {
+    var resultSet = JSON.parse(response);
+    if (resultSet.status.trim() == "success") {
+      $("#alertSuccess").text("Successfully deleted.");
+      $("#alertSuccess").show();
+      $("#divItemsGrid").html(resultSet.data);
+    } else if (resultSet.status.trim() == "error") {
+      $("#alertError").text(resultSet.data);
+      $("#alertError").show();
+    }
+  } else if (status == "error") {
+    $("#alertError").text("Error while deleting.");
+    $("#alertError").show();
+  } else {
+    $("#alertError").text("Unknown error while deleting..");
+    $("#alertError").show();
+  }
+}
+
+function validateCusForm() {
+  // CODE
+  if ($("#firstName").val().trim() == "") {
+    return "Insert firstname.";
+  }
+
+  // NAME
+  if ($("#lastName").val().trim() == "") {
+    return "Insert lastname.";
+  }
+
+  // nic-------------------------------
+  if ($("#nic").val().trim() == "") {
+    return "Insert nic.";
+  }
+
+ 
+
+  // convert to decimal phone
+   if ($("#phone").val().trim() == "") {
+    return "Insert nic.";
+  }
+
+  // email------------------------
+  if ($("#email").val().trim() == "") {
+    return "Insert email.";
+  }
+  return true;
+}
+

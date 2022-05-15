@@ -1,24 +1,20 @@
 package com;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 
 public class Customer {
 	private Connection connect() {
 		Connection con = null;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/customer", "root", "12345");
+			con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/customermanagement", "root", "12345");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return con;
 	}
 	
-	public String insertCustomer(int customerId, String firstName, String lastName, String nic, int phone, String email) {
+	public String insertCustomer(String firstName, String lastName, String nic, int phone, String email) {
 		String output = "";
 		try {
 			Connection con = connect();
@@ -26,7 +22,7 @@ public class Customer {
 				return "Error while connecting to the database for inserting.";
 			}
 			// create a prepared statement
-			String query = " insert into items (`customerId`,`firstName`,`lastName`,`nic`,`phone`,`email`)"
+			String query = " insert into customer (`customerId`,`firstName`,`lastName`,`nic`,`phone`,`email`)"
 					+ " values (?, ?, ?, ?, ?,?)";
 			PreparedStatement preparedStmt = con.prepareStatement(query);
 			// binding values
@@ -39,10 +35,10 @@ public class Customer {
 			// execute the statement
 			preparedStmt.execute();
 			con.close();
-//			String newCustomers = readItems();
-//			output = "{\"status\":\"success\", \"data\": \"" + newCustomers + "\"}";
+			String newCustomers = readCustomers();
+			output = "{\"status\":\"success\", \"data\": \"" + newCustomers + "\"}";
 		} catch (Exception e) {
-			output = "{\"status\":\"error\", \"data\": \"Error while inserting the item.\"}";
+			output = "{\"status\":\"error\", \"data\": \"Error while inserting the customer.\"}";
 			System.err.println(e.getMessage());
 		}
 		return output;
@@ -56,11 +52,9 @@ public class Customer {
 				return "Error while connecting to the database for reading.";
 			}
 			// Prepare the html table to be displayed
-			output = "<table border='1'><tr><th>Item Code</th> <th>Item Name</th><th>Item Price</th>"
-					+ "<th>Item Description</th> <th>Update</th><th>Remove</th></tr>";
 			
-			output = "<table border='1'><tr><th>Customer Id</th><th>First Name</th>" + "<th>Last Name</th>"
-					+ "<th>Nic</th>" + "<th>Phone Number</th>" + "<th>Email</th>" + "<th>Address</th>"
+			output = "<table border='1'><tr><th>First Name</th>" + "<th>Last Name</th>"
+					+ "<th>Nic</th>" + "<th>Phone Number</th>" + "<th>Email</th>" 
 					+ "<th>Update</th><th>Remove</th></tr>";
 			
 			
@@ -69,34 +63,34 @@ public class Customer {
 			ResultSet rs = stmt.executeQuery(query);
 			// iterate through the rows in the result set
 			while (rs.next()) {
-			
-				
-				
-				int customerId = rs.getInt("customerId");
+//				int customerId = rs.getInt("customerId");
+				String customerId= Integer.toString(rs.getInt("customerId"));
 				String firstName = rs.getString("firstName");
 				String lastName = rs.getString("lastName");
 				String nic = rs.getString("nic");
-				int phoneNumber = rs.getInt("phone");
+				String phone= Integer.toString(rs.getInt("phone"));
 				String email = rs.getString("email");
-				String address = rs.getString("address");
+//				String address = rs.getString("address");
 				// Add into the html table
-				output += "<tr><td><input id='hidItemIDUpdate' name='hidItemIDUpdate' type='hidden' value='" + customerId
+				output += "<tr><td><input id='hidCustomerIDUpdate' name='hidCustomerIDUpdate' type='hidden' value='" + customerId
 						+ "'>" + firstName + "</td>";
 				output += "<td>" + lastName + "</td>";
 				output += "<td>" + nic + "</td>";
-				output += "<td>" + phoneNumber + "</td>";
+				output += "<td>" + phone + "</td>";
 				output += "<td>" + email + "</td>";
-				output += "<td>" + address+ "</td>";
+//				output += "<td>" + address+ "</td>";
 				// buttons
-				output += "<td><input name='btnUpdate' type='button' value='Update' class='btnUpdate btn btn-secondary'></td>"
-						+ "<td><input name='btnRemove' type='button' value='Remove' class='btnRemove btn btn-danger' data-itemid='"
-						+ customerId + "'>" + "</td></tr>";
+				
+				output += "<td><input name='btnUpdate' type='button' value='Update' "
+						+ "class='btnUpdate btn btn-secondary' data-customerid='" + customerId + "'></td>"
+						+ "<td><input name='btnRemove' type='button' value='Remove' "
+						+ "class='btnRemove btn btn-danger' data-customerid='" + customerId + "'></td></tr>";
 			}
 			con.close();
 			// Complete the html table
 			output += "</table>";
 		} catch (Exception e) {
-			output = "Error while reading the items.";
+			output = "Error while reading the customers.";
 			System.err.println(e.getMessage());
 		}
 		return output;
@@ -119,8 +113,6 @@ public class Customer {
 			preparedStmt.setString(3, nic);
 			preparedStmt.setInt(4, Integer.parseInt(phone));
 			preparedStmt.setString(5, email);
-
-			
 			preparedStmt.setInt(6, Integer.parseInt(customerId));
 			
 			// execute the statement
@@ -131,7 +123,7 @@ public class Customer {
 			String newCustomers = readCustomers();
 			output = "{\"status\":\"success\", \"data\": \"" + newCustomers + "\"}";
 		} catch (Exception e) {
-			output = "{\"status\":\"error\", \"data\": \"Error while updating the item.\"}";
+			output = "{\"status\":\"error\", \"data\": \"Error while updating the customer.\"}";
 			System.err.println(e.getMessage());
 		}
 		return output;
@@ -155,7 +147,7 @@ public class Customer {
 			String newCustomers = readCustomers();
 			output = "{\"status\":\"success\", \"data\": \"" + newCustomers + "\"}";
 		} catch (Exception e) {
-			output = "{\"status\":\"error\", \"data\": \"Error while deleting the item.\"}";
+			output = "{\"status\":\"error\", \"data\": \"Error while deleting the customer.\"}";
 			System.err.println(e.getMessage());
 		}
 		return output;

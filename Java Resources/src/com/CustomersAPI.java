@@ -1,5 +1,5 @@
 package com;
-
+import com.Customer;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -43,10 +43,10 @@ public class CustomersAPI extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		String output = customerObj.insertCustomer(Integer.parseInt(request.getParameter("customerId")),request.getParameter("firstName"), request.getParameter("lastName"),
+		String output = customerObj.insertCustomer(request.getParameter("firstName"), request.getParameter("lastName"),
 				request.getParameter("nic"), Integer.parseInt(request.getParameter("phone")),request.getParameter("email"));
 		response.getWriter().write(output);
-		doGet(request, response);
+		
 	}
 
 	/**
@@ -72,7 +72,7 @@ public class CustomersAPI extends HttpServlet {
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		Map paras = getParasMap(request); 
-		 String output = customerObj.updateCustomer(paras.get("hidItemIDSave").toString(), 
+		 String output = customerObj.updateCustomer(paras.get("hidCustomerIDSave").toString(), 
 		 paras.get("firstName").toString(), 
 		paras.get("lastName").toString(), 
 		paras.get("nic").toString(), 
