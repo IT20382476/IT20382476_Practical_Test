@@ -104,7 +104,7 @@ public class Customer {
 				return "Error while connecting to the database for updating.";
 			}
 			// create a prepared statement
-			String query = "UPDATE customer SET firstName=?,lastName=?,nic=?,phone=? WHERE customerId=?";
+			String query = "UPDATE customer SET firstName=?,lastName=?,nic=?,phone=?,email=? WHERE customerId=?";
 			PreparedStatement preparedStmt = con.prepareStatement(query);
 			// binding values
 			
@@ -152,8 +152,5 @@ public class Customer {
 		}
 		return output;
 	}
-
-	
-	
 
 }

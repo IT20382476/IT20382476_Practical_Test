@@ -90,5 +90,8 @@ public class CustomersAPI extends HttpServlet {
 		 String output = customerObj.deleteCustomer(paras.get("customerId").toString()); 
 		response.getWriter().write(output); 
 	}
+	
+	
+	
 
 }
